@@ -44,8 +44,10 @@ public plugin_init(){
 }
 
 public showMsg(){
-	static msg[e_msgInfo]; ArrayGetArray(msgs, getNextMsgId(), msg, e_msgInfo);
-	czNotifs_showNotif(0, msg[mi_text], msgsLifeTime, msg[mi_color]);
+	if(ArraySize(msgs) > 0){
+		static msg[e_msgInfo]; ArrayGetArray(msgs, getNextMsgId(), msg, e_msgInfo);
+		czNotifs_showNotif(0, msg[mi_text], msgsLifeTime, msg[mi_color]);
+	}
 	set_task(msgsRate, "showMsg");
 }
 
