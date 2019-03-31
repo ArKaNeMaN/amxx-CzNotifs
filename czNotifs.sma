@@ -19,7 +19,7 @@ enum notifColors{
 new notifMsgs[e_notifMsgs];
 
 #define PLUG_NAME "CZ Notifs"
-#define PLUG_VER "1.0"
+#define PLUG_VER "2.0"
 
 public plugin_init(){
 	register_plugin(PLUG_NAME, PLUG_VER, "ArKaNeMaN");
