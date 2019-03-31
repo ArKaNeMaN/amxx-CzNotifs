@@ -1,5 +1,4 @@
 #include <amxmodx>
-#include <hamsandwich>
 #include <czNotifs>
 
 public plugin_init(){
@@ -10,13 +9,9 @@ public plugin_init(){
 }
 
 public showNotif(id){
-	czNotifs_showLiteNotif(id, "Test line 1^nTest line 2^nTest line 3", 5.0);
+	czNotifs_showNotif(id, "Test line 1^nTest line 2^nTest line 3", 5.0);
 }
 
 public showNotifSub(id){
-	new Array:subs = ArrayCreate(MAX_TUTOR_CHARS);
-	ArrayPushString(subs, "Test sub 1");
-	ArrayPushString(subs, "Test sub 3");
-	ArrayPushString(subs, "Test sub 4");
-	czNotifs_showNotif(id, "Test line 1^nTest line 2^nTest line 3", 5.0, "green", subs);
+	czNotifs_showNotif(id, "Test line 1^nTest line 2^nTest line 3", 5.0, "green");
 }

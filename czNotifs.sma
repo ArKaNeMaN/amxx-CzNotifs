@@ -1,5 +1,4 @@
 #include <amxmodx>
-#include <amxmisc>
 #include <czNotifs>
 
 #define isNotifShowed(%1) task_exists(%1)
@@ -48,16 +47,8 @@ public plugin_precache(){
 }
 
 public plugin_natives(){
-	register_native("czNotifs_showLiteNotif", "_showLiteNotif");
 	register_native("czNotifs_showNotif", "_showNotif");
 	register_native("czNotifs_closeNotif", "_closeNotif");
-}
-
-public _showLiteNotif(){
-	static id; id = get_param(1);
-	static text[MAX_TUTOR_CHARS]; get_string(2, text, MAX_TUTOR_CHARS-1);
-	static Float:dur; dur = get_param_f(3);
-	showNotif(id, text, dur);
 }
 
 public _showNotif(plugId, argsNum){
@@ -67,8 +58,7 @@ public _showNotif(plugId, argsNum){
 	static strColor[32], notifColors:color;
 	get_string(4, strColor, charsmax(strColor));
 	color = getColorType(strColor);
-	static Array:subNotifs; subNotifs = Array:get_param(5);
-	showNotif(id, text, dur, color, subNotifs);
+	showNotif(id, text, dur, color);
 }
 
 public _closeNotif(){
@@ -76,9 +66,9 @@ public _closeNotif(){
 	closeNotif(id);
 }
 
-showNotif(id, const text[MAX_TUTOR_CHARS], Float:dur = 5.0, notifColors:color = nc_yellow, Array:subNotifs = Array:0){
+showNotif(id, const text[MAX_TUTOR_CHARS], Float:dur = 5.0, notifColors:color = nc_yellow){
 	if(!id){
-		for(new i = 1; i <= MAX_PLAYERS; i++) if(is_user_connected(i)) showNotif(i, text, dur, color, subNotifs);
+		for(new i = 1; i <= MAX_PLAYERS; i++) if(is_user_connected(i)) showNotif(i, text, dur, color);
 		return;
 	}
 	
@@ -87,23 +77,12 @@ showNotif(id, const text[MAX_TUTOR_CHARS], Float:dur = 5.0, notifColors:color = 
 	if(isNotifShowed(id)) closeNotif(id);
 	
 	message_begin(MSG_ONE_UNRELIABLE, notifMsgs[msg_show], _, id);
-	
 	write_string(text);
-	if(subNotifs){
-		write_byte(ArraySize(subNotifs));
-		static subNotif[MAX_TUTOR_CHARS];
-		if(ArraySize(subNotifs)) for(new i = 0; i < ArraySize(subNotifs); i++){
-			ArrayGetString(subNotifs, i, subNotif, MAX_TUTOR_CHARS-1);
-			write_string(subNotif);
-		}
-	}
-	else write_byte(0);
+	write_byte(0);
 	write_short(0);
 	write_short(0);
 	write_short(1<<_:color);
 	message_end();
-	
-	if(subNotifs) ArrayDestroy(subNotifs);
 	
 	if(dur > 0.0) set_task(dur, "task_closeNotif", id);
 	
