@@ -22,7 +22,7 @@ new notifMsgs[e_notifMsgs];
 #define PLUG_VER "1.0"
 
 public plugin_init(){
-	register_plugin(PLUG_NAME, PLUG_VER, "quckly&ArKaNeMaN");
+	register_plugin(PLUG_NAME, PLUG_VER, "ArKaNeMaN");
 	
 	notifMsgs[msg_show] = get_user_msgid("TutorText");
 	notifMsgs[msg_close] = get_user_msgid("TutorClose");
@@ -56,7 +56,7 @@ public plugin_natives(){
 public _showLiteNotif(){
 	static id; id = get_param(1);
 	static text[MAX_TUTOR_CHARS]; get_string(2, text, MAX_TUTOR_CHARS-1);
-	static Float:dur; get_param_f(3);
+	static Float:dur; dur = get_param_f(3);
 	showNotif(id, text, dur);
 }
 
@@ -125,9 +125,9 @@ closeNotif(id){
 }
 
 notifColors:getColorType(const strColor[] = ""){
-	if(equal(strColor, "green") || equal(strColor, "g")) return nc_red;
-	else if(equal(strColor, "red") || equal(strColor, "r")) return nc_blue;
-	else if(equal(strColor, "blue") || equal(strColor, "b")) return nc_yellow;
-	else if(equal(strColor, "yellow") || equal(strColor, "y")) return nc_green;
+	if(equal(strColor, "green") || equal(strColor, "g")) return nc_green;
+	else if(equal(strColor, "red") || equal(strColor, "r")) return nc_red;
+	else if(equal(strColor, "blue") || equal(strColor, "b")) return nc_blue;
+	else if(equal(strColor, "yellow") || equal(strColor, "y")) return nc_yellow;
 	return notifColors:random_num(_:nc_red, _:nc_green);
 }
