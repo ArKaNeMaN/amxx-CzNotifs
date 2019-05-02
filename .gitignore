@@ -1,0 +1,8 @@
+.gitattributes
+include/*
+!include/czNotifs.inc
+compiled/*
+compile.exe
+amxxpc32.dll
+compile.dat
+amxxpc.exe
